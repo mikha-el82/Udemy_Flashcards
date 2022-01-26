@@ -8,14 +8,22 @@ BACKGROUND_COLOR = "#B1DDC6"
 cards_df = pandas.read_csv("data/french_words.csv")
 cards_to_learn = cards_df.to_dict(orient="records")
 
-
+# ---------------------------- GET NEW FLASHCARD ------------------------------- #
 def get_next_card():
     new_card = random.choice(cards_to_learn)
     french_word = new_card["French"]
     english_word = new_card["English"]
     print(f"This is the couple: {french_word} - {english_word}")
     canvas.itemconfig(language_label, text="French")
-    canvas.itemconfigure(word_label, text=french_word)
+    canvas.itemconfig(word_label, text=french_word)
+
+# ---------------------------- FLIP FLASHCARD ------------------------------- #
+
+
+def flip_card(english_word):
+    # pass
+    canvas.itemconfig(language_label, text="English")
+    canvas.itemconfig(word_label, text=english_word)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
