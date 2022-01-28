@@ -1,22 +1,23 @@
 from tkinter import *
+
 import pandas
 import random
 
 BACKGROUND_COLOR = "#B1DDC6"
 
-
 # ---------------------------- CREATE FLASHCARDS ------------------------------- #
 
 try:
-    cards_df = pandas.read_csv("data/words_to_learn.csv")
-    cards_to_learn = cards_df.to_dict(orient="records")
+    cards_df = pandas.read_csv("data/cards_to_learn.csv")
+    print("File 'cards_to_learn.csv' found. Using this file.")
 except FileNotFoundError:
     print("File not found... using general file 'french_words.csv'")
     cards_df = pandas.read_csv("data/french_words.csv")
-    cards_to_learn = cards_df.to_dict(orient="records")  # list of dictionaries
 
-
+cards_to_learn = cards_df.to_dict(orient="records")
 current_card = {}
+
+# ---------------------------- GETTING NEXT FLASHCARD ------------------------------- #
 
 
 def get_next_card():
@@ -48,13 +49,15 @@ def flip_card():
     canvas.itemconfig(word_label, text=english_word)
     print("Flipping")
 
-# ---------------------------- UI SETUP ------------------------------- #
+# ---------------------------- REMOVE CARDS ------------------------------- #
+
 
 def remove_card():
     cards_to_learn.remove(current_card)
-    # cards_to_learn.to_csv("data/cards.csv", index=False)
     print(len(cards_to_learn))
-
+    cards_to_learn_df = pandas.DataFrame(cards_to_learn)
+    # creates the file only after first word was removed
+    cards_to_learn_df.to_csv("data/cards_to_learn.csv", index=False)
     get_next_card()
 
 
@@ -86,5 +89,4 @@ right_btn = Button(image=right_img, bg=BACKGROUND_COLOR, highlightthickness=0, b
 right_btn.grid(column=1, row=1)
 
 get_next_card()
-
 window.mainloop()
