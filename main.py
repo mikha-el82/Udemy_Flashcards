@@ -1,7 +1,6 @@
 from tkinter import *
 import pandas
 import random
-import csv
 
 BACKGROUND_COLOR = "#B1DDC6"
 
